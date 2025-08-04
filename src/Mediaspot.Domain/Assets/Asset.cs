@@ -9,16 +9,18 @@ public sealed class Asset : AggregateRoot
     private readonly List<MediaFile> _mediaFiles = [];
 
     public string ExternalId { get; private set; }
+    public string TitleId { get; private set; }
     public Metadata Metadata { get; private set; }
     public bool Archived { get; private set; }
 
     public IReadOnlyCollection<MediaFile> MediaFiles => _mediaFiles.AsReadOnly();
 
-    private Asset() { ExternalId = string.Empty; Metadata = new("", null, null); }
+    private Asset() { ExternalId = string.Empty; TitleId = string.Empty; Metadata = new("", null, null); }
 
-    public Asset(string externalId, Metadata metadata)
+    public Asset(string externalId, string titleId, Metadata metadata)
     {
         ExternalId = externalId;
+        TitleId = titleId;
         Metadata = metadata;
         Raise(new AssetCreated(Id));
     }
