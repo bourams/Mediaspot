@@ -37,4 +37,16 @@ Ce que j’aurais voulu faire idéalement en plus :
  - Gérer les environnements
  - Refactorer les tests unitaires (mieux organisés)
 
-Je vais continuer sur middle.
+Pour ce qui est du transcodage (middle), voici ce que je pense devoir faire :
+1 - Il y a quelque chose, à partir de l’asset, qui déclenche le transcodage (metadata ? mediafile ?)
+2 - Mediaspot.Domain.Assets.Events.TranscodeRequested est levé
+3 - Mediaspot.Application.Events.TranscodeRequestedHandler intercepte l’événement (save changes, etc.) : le transcode est en Pending
+4 - Normalement, le transcode est mis dans une queue pour qu’un worker le consomme
+5- Le worker le récupère, met à jour l’état en Running (delay)
+6 - Le worker met à jour la base de données (ou lève un event ? ce n’est pas encore clair pour moi)
+7 -Une fois fini, le worker met l’état en Completed
+8 - La base est mise à jour
+
+En cas d’échec (Fail), dans un premier temps, l’insérer en base. Une fois que ça fonctionne, ajouter un système de retry, d’alerting et de logging.
+Faire attention à ce que l’ordre des états (Pending → Running → Succeeded) ne puisse pas être inversé. Voir ce qu’il faut faire si l’API plante.
+En me documentant, je suis tombé sur le pattern Outbox. Je ne m’y suis pas attardé car l’objectif de ce test était d’avoir quelque chose de fonctionnel d’abord.
