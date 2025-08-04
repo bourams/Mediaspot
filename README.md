@@ -11,6 +11,7 @@ Ce que j'ai fait:
  - Ajout de l'aggregate root Title
  - Post title 
  - Get tile
+ - Put Title
  - Swagger partielle
  - organisation des endpoints de title
 
