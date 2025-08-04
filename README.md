@@ -14,7 +14,7 @@ Ce que j'ai fait:
  - Swagger partielle
  - organisation des endpoints de title
 
-Ce qu’il faudrait faire (liste non exhaustive) :
+Ce qu’il faudrait faire:
  - Versioner l'api
  - Mettre les endpoints d’Asset dans un dossier dédié (comme pour Title)
  - Faire de même pour les entités dans le DbContext
