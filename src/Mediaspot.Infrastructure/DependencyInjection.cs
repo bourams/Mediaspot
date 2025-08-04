@@ -1,5 +1,7 @@
 ﻿using Mediaspot.Application.Assets.Commands.Create;
 using Mediaspot.Application.Common;
+using Mediaspot.Application.Common.Behaviors;
+using Mediaspot.Application.Titles.Commands;
 using Mediaspot.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,8 +18,13 @@ public static class DependencyInjection
         services.AddScoped<IAssetRepository, AssetRepository>();
         services.AddScoped<ITitleRepository, TitleRepository>();
         services.AddScoped<ITranscodeJobRepository, TranscodeJobRepository>();
+
         // MediatR
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateAssetCommand).Assembly));
+        services.AddMediatR(cfg =>
+        {
+            cfg.RegisterServicesFromAssembly(typeof(CreateAssetCommand).Assembly);
+            cfg.AddOpenBehavior(typeof(ValidationPipeline<,>));
+        });
 
         return services;
     }
