@@ -1,4 +1,6 @@
+using FluentValidation;
 using Mediaspot.Api.DTOs;
+using Mediaspot.Api.Endpoints;
 using Mediaspot.Application.Assets.Commands.Archive;
 using Mediaspot.Application.Assets.Commands.Create;
 using Mediaspot.Application.Assets.Commands.RegisterMediaFile;
@@ -66,5 +68,7 @@ app.MapPost("/assets/{id:guid}/archive", async (Guid id, ISender sender) =>
     })
     .WithName("PostArchiveAsset")
     .WithOpenApi();
+
+app.MapTitleEndpoints();
 
 app.Run();
