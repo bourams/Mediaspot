@@ -1,5 +1,6 @@
 ﻿using Mediaspot.Domain.Assets;
 using Mediaspot.Domain.Assets.ValueObjects;
+using Mediaspot.Domain.Titles;
 using Mediaspot.Domain.Transcoding;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,15 +8,31 @@ namespace Mediaspot.Infrastructure.Persistence;
 
 public sealed class MediaspotDbContext(DbContextOptions<MediaspotDbContext> options) : DbContext(options)
 {
+    public DbSet<Title> Titles => Set<Title>();
     public DbSet<Asset> Assets => Set<Asset>();
     public DbSet<TranscodeJob> TranscodeJobs => Set<TranscodeJob>();
 
+    //TODO: Mettre la config des entity dans des fichiers externes (au moins title et asset)  dans le même style que Mediaspot.Infrastructure.DependencyInjection
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Title>(b =>
+        {
+            b.HasKey(t => t.Id);
+            b.Property(t => t.Name).IsRequired();
+            b.Property(t => t.Description);
+            b.Property(t => t.ReleaseDate);
+            b.Property(t => t.Type)
+             .HasConversion<string>()
+             .IsRequired();
+
+            b.HasIndex(t => t.Name).IsUnique();
+        });
+
         modelBuilder.Entity<Asset>(b =>
         {
             b.HasKey(a => a.Id);
             b.Property(a => a.ExternalId).IsRequired();
+            b.Property(a => a.TitleId).IsRequired();
             b.OwnsOne(a => a.Metadata, m =>
             {
                 m.Property(x => x.Title).IsRequired();

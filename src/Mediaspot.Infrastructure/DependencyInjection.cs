@@ -14,8 +14,8 @@ public static class DependencyInjection
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IAssetRepository, AssetRepository>();
+        services.AddScoped<ITitleRepository, TitleRepository>();
         services.AddScoped<ITranscodeJobRepository, TranscodeJobRepository>();
-
         // MediatR
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateAssetCommand).Assembly));
 
