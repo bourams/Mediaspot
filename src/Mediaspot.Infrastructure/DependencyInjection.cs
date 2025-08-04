@@ -1,7 +1,7 @@
 ﻿using Mediaspot.Application.Assets.Commands.Create;
 using Mediaspot.Application.Common;
 using Mediaspot.Application.Common.Behaviors;
-using Mediaspot.Application.Titles.Commands;
+using Mediaspot.Application.Titles.Commands.Create;
 using Mediaspot.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

@@ -2,7 +2,7 @@
 using Mediaspot.Domain.Titles;
 using MediatR;
 
-namespace Mediaspot.Application.Titles.Commands;
+namespace Mediaspot.Application.Titles.Commands.Create;
 
 public sealed class CreateTitleHandler(ITitleRepository repo, IUnitOfWork uow)
     : IRequestHandler<CreateTitleCommand, Guid>

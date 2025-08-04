@@ -1,5 +1,5 @@
 ﻿using Mediaspot.Application.Common;
-using Mediaspot.Application.Titles.Commands;
+using Mediaspot.Application.Titles.Commands.Create;
 using Mediaspot.Domain.Titles;
 using Moq;
 

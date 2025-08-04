@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Mediaspot.Application.Titles.Commands;
+namespace Mediaspot.Application.Titles.Commands.Create;
 
 public sealed class CreateTitleValidator : AbstractValidator<CreateTitleCommand>
 {

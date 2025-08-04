@@ -6,7 +6,7 @@ using Mediaspot.Application.Assets.Commands.Create;
 using Mediaspot.Application.Assets.Commands.RegisterMediaFile;
 using Mediaspot.Application.Assets.Commands.UpdateMetadata;
 using Mediaspot.Application.Assets.Queries.GetById;
-using Mediaspot.Application.Titles.Commands;
+using Mediaspot.Application.Titles.Commands.Create;
 using Mediaspot.Infrastructure;
 using Mediaspot.Infrastructure.Persistence;
 using MediatR;
