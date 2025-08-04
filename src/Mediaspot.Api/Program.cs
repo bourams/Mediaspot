@@ -77,3 +77,5 @@ app.MapPost("/assets/{id:guid}/archive", async (Guid id, ISender sender) =>
 app.MapTitleEndpoints();
 
 app.Run();
+
+public partial class Program { }
