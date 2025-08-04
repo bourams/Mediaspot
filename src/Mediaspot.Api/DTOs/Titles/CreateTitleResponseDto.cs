@@ -1,3 +1,3 @@
 ﻿namespace Mediaspot.Api.DTOs.Titles;
 
-public sealed record CreateTitleResponseDto(string Id);
+public sealed record CreateTitleResponseDto(Guid Id);

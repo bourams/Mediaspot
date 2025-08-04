@@ -1,5 +1,6 @@
 ﻿using Mediaspot.Api.DTOs.Titles;
-using Mediaspot.Application.Titles.Commands;
+using Mediaspot.Application.Titles.Commands.Create;
+using Mediaspot.Application.Titles.Commands.Update;
 using Mediaspot.Application.Titles.Queries.GetById;
 using MediatR;
 
@@ -17,7 +18,7 @@ public static class TitleEndpoints
             // Auto mapper ?
             var cmd = new CreateTitleCommand(dto.Name, dto.Description, dto.ReleaseDate, dto.Type);
             var id = await sender.Send(cmd);
-            var response = new CreateTitleResponseDto(id.ToString());
+            var response = new CreateTitleResponseDto(id);
 
             return TypedResults.CreatedAtRoute(response, "GetTitleById", new { id });
         })
@@ -39,5 +40,16 @@ public static class TitleEndpoints
         .Produces<TitleDto>(StatusCodes.Status200OK);
         // TODO: StatusCodes.Status404NotFound
         // TODO: StatusCodes.Status500InternalServerError
+
+        group.MapPut("/{id:guid}/", async (Guid id, UpdateTitleDto dto, ISender sender) =>
+        {
+            var cmd = new UpdateTitleCommand(id, dto.Name, dto.Description, dto.releaseDate, dto.Type);
+
+            await sender.Send(cmd);
+           
+            return Results.NoContent();
+        })
+        .WithName("PutUpdateTitle")
+        .WithOpenApi();
     }
 }

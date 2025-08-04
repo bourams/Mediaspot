@@ -13,9 +13,22 @@ Accept: application/json
 }
 ###
 
-### Get Title
-@titleId = 4a8174cd-d4ab-469a-917b-d80954a939f9
+@titleId = 394810d0-6a57-46bd-b969-bdb961bfc152
 
+### Update Title
+PUT {{Mediaspot_Api_HostAddress}}/titles/{{titleId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "78910",
+  "description": "Sample Title 2",
+  "releaseDate": "2025-03-10",
+  "type": 2
+}
+###
+
+### Get Title
 GET {{Mediaspot_Api_HostAddress}}/titles/{{titleId}}
 ###
 
