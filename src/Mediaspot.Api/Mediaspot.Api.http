@@ -1,11 +1,31 @@
 @Mediaspot_Api_HostAddress = https://localhost:7064
 
+### Create Title
+POST {{Mediaspot_Api_HostAddress}}/titles
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "123456",
+  "description": "Sample Title",
+  "releaseDate": "2025-03-09",
+  "type": 1
+}
+###
+
+### Get Title
+@titleId = 4a8174cd-d4ab-469a-917b-d80954a939f9
+
+GET {{Mediaspot_Api_HostAddress}}/titles/{{titleId}}
+###
+
 ### Create Asset
 POST {{Mediaspot_Api_HostAddress}}/assets
 Content-Type: application/json
 Accept: application/json
 
 {
+  "titleId": "{{titleId}}",
   "externalId": "123456",
   "title": "Sample Asset",
   "description": "A test asset",

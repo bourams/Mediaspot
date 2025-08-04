@@ -1,9 +1,12 @@
+using FluentValidation;
 using Mediaspot.Api.DTOs;
+using Mediaspot.Api.Endpoints;
 using Mediaspot.Application.Assets.Commands.Archive;
 using Mediaspot.Application.Assets.Commands.Create;
 using Mediaspot.Application.Assets.Commands.RegisterMediaFile;
 using Mediaspot.Application.Assets.Commands.UpdateMetadata;
 using Mediaspot.Application.Assets.Queries.GetById;
+using Mediaspot.Application.Titles.Commands;
 using Mediaspot.Infrastructure;
 using Mediaspot.Infrastructure.Persistence;
 using MediatR;
@@ -14,6 +17,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// TODO: laisser ici ?
+builder.Services.AddScoped<IValidator<CreateTitleCommand>, CreateTitleValidator>();
+builder.Services.AddScoped<IValidator<CreateAssetCommand>, CreateAssetValidator>();
 
 builder.Services.AddInfrastructure("Mediaspot.Backend.TechnicalTest");
 
@@ -66,5 +73,7 @@ app.MapPost("/assets/{id:guid}/archive", async (Guid id, ISender sender) =>
     })
     .WithName("PostArchiveAsset")
     .WithOpenApi();
+
+app.MapTitleEndpoints();
 
 app.Run();
