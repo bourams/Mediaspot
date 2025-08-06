@@ -8,6 +8,8 @@ public sealed class TranscodeJobRepository(MediaspotDbContext db) : ITranscodeJo
 {
     public async Task AddAsync(TranscodeJob job, CancellationToken ct) => await db.TranscodeJobs.AddAsync(job, ct);
 
+    public async Task GetAsync(Guid id) => await db.TranscodeJobs.FirstOrDefaultAsync(x => x.Id == id);
+
     public Task<bool> HasActiveJobsAsync(Guid assetId, CancellationToken ct)
         => db.TranscodeJobs.AnyAsync(j => j.AssetId == assetId && (j.Status == TranscodeStatus.Pending || j.Status == TranscodeStatus.Running), ct);
 }

@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Mediaspot.Application.Events;
 
-public sealed class TranscodeRequestedHandler(ITranscodeJobRepository repo, IUnitOfWork uow)
+public sealed class TranscodeRequestedHandler(ITranscodeJobRepository repo, IUnitOfWork uow, IMessageQueue queue)
     : INotificationHandler<TranscodeRequested>
 {
     public async Task Handle(TranscodeRequested @event, CancellationToken ct)
@@ -13,5 +13,6 @@ public sealed class TranscodeRequestedHandler(ITranscodeJobRepository repo, IUni
         var job = new TranscodeJob(@event.AssetId, @event.MediaFileId, @event.TargetPreset);
         await repo.AddAsync(job, ct);
         await uow.SaveChangesAsync(ct);
+        await queue.EnqueueAsync(job, ct);
     }
 }

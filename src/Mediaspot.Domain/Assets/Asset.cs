@@ -1,6 +1,7 @@
 ﻿using Mediaspot.Domain.Assets.Events;
 using Mediaspot.Domain.Assets.ValueObjects;
 using Mediaspot.Domain.Common;
+using MediatR;
 
 namespace Mediaspot.Domain.Assets;
 
@@ -51,5 +52,14 @@ public sealed class Asset : AggregateRoot
 
         Archived = true;
         Raise(new AssetArchived(Id));
+    }
+
+    public void Transcode(Guid mediaFileId, string preset)
+    {
+        var mediaFile = MediaFiles.FirstOrDefault(x => x.Id.Value == mediaFileId);
+        if (mediaFile is null)
+            throw new KeyNotFoundException("Mediafile not found");
+
+        Raise(new TranscodeRequested(Id, mediaFileId, preset));
     }
 }

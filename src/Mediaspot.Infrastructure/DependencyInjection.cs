@@ -3,6 +3,7 @@ using Mediaspot.Application.Common;
 using Mediaspot.Application.Common.Behaviors;
 using Mediaspot.Application.Titles.Commands;
 using Mediaspot.Infrastructure.Persistence;
+using Mediaspot.Infrastructure.Queue;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -26,6 +27,8 @@ public static class DependencyInjection
             cfg.RegisterServicesFromAssembly(typeof(CreateTitleCommand).Assembly);
             cfg.AddOpenBehavior(typeof(ValidationPipeline<,>));
         });
+
+        services.AddSingleton<IMessageQueue, MediaSpotQueue>();
 
         return services;
     }

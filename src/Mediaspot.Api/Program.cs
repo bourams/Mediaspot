@@ -74,6 +74,15 @@ app.MapPost("/assets/{id:guid}/archive", async (Guid id, ISender sender) =>
     .WithName("PostArchiveAsset")
     .WithOpenApi();
 
+app.MapPost("/assets/{id:guid}/transcode", async (Guid id, TranscodeRequestDto dto, ISender sender) =>
+{
+    var cmd = new TranscodeMediaFileCommand(id, dto.MediaFileId, dto.Preset);
+    await sender.Send(cmd);
+    return Results.Accepted();
+})
+    .WithName("PostArchiveAsset")
+    .WithOpenApi();
+
 app.MapTitleEndpoints();
 
 app.Run();
